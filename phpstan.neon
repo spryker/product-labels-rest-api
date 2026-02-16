@@ -5,3 +5,6 @@ parameters:
         - '#Method .+ProductLabelByProductConcreteSkuExpander::addProductLabelsResourceRelationships\(\) should return array<.+RestResourceInterface> but returns array<void>.#'
         -
             identifier: missingType.iterableValue
+        # Glue framework annotation parsing
+        -
+            identifier: phpDoc.parseError
