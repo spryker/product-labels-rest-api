@@ -22,9 +22,6 @@ use Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterfa
 
 class ProductLabelsRestApiFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface
-     */
     public function createProductLabelReader(): ProductLabelReaderInterface
     {
         return new ProductLabelReader(
@@ -36,49 +33,31 @@ class ProductLabelsRestApiFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface
-     */
     public function createProductLabelMapper(): ProductLabelMapperInterface
     {
         return new ProductLabelMapper();
     }
 
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelResourceRelationshipExpanderInterface
-     */
     public function createProductLabelResourceRelationshipExpander(): ProductLabelResourceRelationshipExpanderInterface
     {
         return new ProductLabelResourceRelationshipExpander($this->createProductLabelReader());
     }
 
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface
-     */
     public function getProductStorageClient(): ProductLabelsRestApiToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface
-     */
     public function getProductLabelStorageClient(): ProductLabelsRestApiToProductLabelStorageClientInterface
     {
         return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByProductConcreteSkuExpanderInterface
-     */
     public function createProductLabelByProductConcreteSkuExpander(): ProductLabelByProductConcreteSkuExpanderInterface
     {
         return new ProductLabelByProductConcreteSkuExpander($this->createProductLabelReader());
     }
 
-    /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToStoreClientInterface
-     */
     public function getStoreClient(): ProductLabelsRestApiToStoreClientInterface
     {
         return $this->getProvidedDependency(ProductLabelsRestApiDependencyProvider::CLIENT_STORE);

@@ -66,13 +66,6 @@ class ProductLabelReader implements ProductLabelReaderInterface
      */
     protected $storeClient;
 
-    /**
-     * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient
-     * @param \Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface $productLabelMapper
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToStoreClientInterface $storeClient
-     */
     public function __construct(
         ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient,
         ProductLabelMapperInterface $productLabelMapper,
@@ -87,11 +80,6 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $this->storeClient = $storeClient;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function getProductLabelById(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
@@ -229,11 +217,6 @@ class ProductLabelReader implements ProductLabelReaderInterface
         return $productLabelResources;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function addProductLabelNotFoundErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -244,11 +227,6 @@ class ProductLabelReader implements ProductLabelReaderInterface
         return $restResponse->addError($restErrorTransfer);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function addProductLabelMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())

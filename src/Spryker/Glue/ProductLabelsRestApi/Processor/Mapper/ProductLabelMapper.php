@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\RestProductLabelsAttributesTransfer;
 
 class ProductLabelMapper implements ProductLabelMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer
-     * @param \Generated\Shared\Transfer\RestProductLabelsAttributesTransfer $restProductLabelsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestProductLabelsAttributesTransfer
-     */
     public function mapProductLabelDictionaryItemTransferToRestProductLabelsAttributesTransfer(
         ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer,
         RestProductLabelsAttributesTransfer $restProductLabelsAttributesTransfer

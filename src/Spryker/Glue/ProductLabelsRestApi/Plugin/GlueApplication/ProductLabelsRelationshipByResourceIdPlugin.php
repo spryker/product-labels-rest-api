@@ -35,9 +35,6 @@ class ProductLabelsRelationshipByResourceIdPlugin extends AbstractPlugin impleme
             ->addRelationshipsByAbstractSku($resources, $restRequest);
     }
 
-    /**
-     * @return string
-     */
     public function getRelationshipResourceType(): string
     {
         return ProductLabelsRestApiConfig::RESOURCE_PRODUCT_LABELS;

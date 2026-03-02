@@ -18,9 +18,6 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
      */
     protected $productLabelReader;
 
-    /**
-     * @param \Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface $productLabelReader
-     */
     public function __construct(ProductLabelReaderInterface $productLabelReader)
     {
         $this->productLabelReader = $productLabelReader;

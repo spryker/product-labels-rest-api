@@ -33,11 +33,6 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -50,11 +45,6 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addProductStorageClientDependency(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
@@ -66,11 +56,6 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addProductLabelStorageClientDependency(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_LABEL_STORAGE, function (Container $container) {
@@ -82,11 +67,6 @@ class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyPro
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addStoreClient(Container $container): Container
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
