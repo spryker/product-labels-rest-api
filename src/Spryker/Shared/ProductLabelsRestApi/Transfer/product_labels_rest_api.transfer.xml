@@ -10,6 +10,14 @@
 
     <transfer name="ProductLabelDictionaryItem">
         <property name="idProductLabel" type="int"/>
+        <property name="name" type="string" description="The name of an entity (e.g., user, category, product, role)."/>
+        <property name="isExclusive" type="bool" description="A flag indicating if a discount is exclusive."/>
+        <property name="position" type="int" description="The position or order of an item in a list."/>
+        <property name="frontEndReference" type="string" description="A reference used on the front end, often for product labels."/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string" description="The name of a locale, such as 'en_US' or 'de_DE'."/>
     </transfer>
 
     <transfer name="RestErrorMessage">

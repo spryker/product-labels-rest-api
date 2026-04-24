@@ -1,0 +1,77 @@
+resource:
+    name: ProductLabels
+    shortName: product-labels
+    description: 'Storefront product labels'
+
+    provider: Spryker\Glue\ProductLabelsRestApi\Api\Storefront\Provider\ProductLabelsStorefrontProvider
+
+    paginationEnabled: false
+
+    operations:
+        - type: Get
+          description: 'Retrieve a product label by id'
+
+        - type: GetCollection
+          uriTemplate: /abstract-products/{abstractProductSku}/product-labels
+          description: 'Retrieve product labels for an abstract product'
+
+        - type: GetCollection
+          uriTemplate: /concrete-products/{concreteProductSku}/product-labels
+          description: 'Retrieve product labels for a concrete product'
+
+    includableIn:
+        - resource: AbstractProducts
+          relationshipName: product-labels
+          uriVariableMappings:
+              sku: abstractProductSku
+
+        - resource: ConcreteProducts
+          relationshipName: product-labels
+          uriVariableMappings:
+              sku: concreteProductSku
+
+    properties:
+        idProductLabel:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            description: 'Product label identifier'
+            openapiContext:
+                example: '2'
+
+        name:
+            type: string
+            writable: false
+            readable: true
+            required: false
+            description: 'Label name'
+            openapiContext:
+                example: 'SALE %'
+
+        isExclusive:
+            type: boolean
+            writable: false
+            readable: true
+            required: false
+            description: 'Whether the label is exclusive'
+            openapiContext:
+                example: false
+
+        position:
+            type: integer
+            writable: false
+            readable: true
+            required: false
+            description: 'Display position of the label'
+            openapiContext:
+                example: 2
+
+        frontEndReference:
+            type: string
+            writable: false
+            readable: true
+            required: false
+            description: 'Front-end reference used for styling hooks'
+            openapiContext:
+                example: 'sale'
