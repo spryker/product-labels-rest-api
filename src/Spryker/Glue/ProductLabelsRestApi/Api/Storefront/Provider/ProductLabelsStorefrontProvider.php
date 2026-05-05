@@ -23,9 +23,7 @@ class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
 
     protected const string URI_VAR_ID = 'idProductLabel';
 
-    protected const string URI_VAR_ABSTRACT_SKU = 'abstractProductSku';
-
-    protected const string URI_VAR_CONCRETE_SKU = 'concreteProductSku';
+    protected const string URI_VAR_SKU = 'sku';
 
     public function __construct(
         protected ProductLabelStorageClientInterface $productLabelStorageClient,
@@ -63,25 +61,15 @@ class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
     protected function provideCollection(): array
     {
         $uriVariables = $this->getUriVariables();
+
+        if (!isset($uriVariables[static::URI_VAR_SKU])) {
+            return [];
+        }
+
+        $abstractProductSku = (string)$uriVariables[static::URI_VAR_SKU];
         $localeName = $this->getLocale()->getLocaleNameOrFail();
         $storeName = $this->getStore()->getNameOrFail();
 
-        if (isset($uriVariables[static::URI_VAR_ABSTRACT_SKU])) {
-            return $this->findLabelsByAbstractSku((string)$uriVariables[static::URI_VAR_ABSTRACT_SKU], $localeName, $storeName);
-        }
-
-        if (isset($uriVariables[static::URI_VAR_CONCRETE_SKU])) {
-            return $this->findLabelsByConcreteSku((string)$uriVariables[static::URI_VAR_CONCRETE_SKU], $localeName, $storeName);
-        }
-
-        return [];
-    }
-
-    /**
-     * @return array<\Generated\Api\Storefront\ProductLabelsStorefrontResource>
-     */
-    protected function findLabelsByAbstractSku(string $abstractProductSku, string $localeName, string $storeName): array
-    {
         $abstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::MAPPING_TYPE_SKU,
             $abstractProductSku,
@@ -99,31 +87,6 @@ class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
         );
 
         return $this->mapLabelsToResources($labels);
-    }
-
-    /**
-     * @return array<\Generated\Api\Storefront\ProductLabelsStorefrontResource>
-     */
-    protected function findLabelsByConcreteSku(string $concreteProductSku, string $localeName, string $storeName): array
-    {
-        $concreteData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
-            static::MAPPING_TYPE_SKU,
-            $concreteProductSku,
-            $localeName,
-        );
-
-        if ($concreteData === null) {
-            return [];
-        }
-
-        $idProductAbstract = (int)($concreteData[static::KEY_ID_PRODUCT_ABSTRACT] ?? 0);
-        $labelsByAbstract = $this->productLabelStorageClient->getProductLabelsByProductAbstractIds(
-            [$idProductAbstract],
-            $localeName,
-            $storeName,
-        );
-
-        return $this->mapLabelsToResources($labelsByAbstract[$idProductAbstract] ?? []);
     }
 
     /**

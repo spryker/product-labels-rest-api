@@ -9,26 +9,19 @@ resource:
 
     operations:
         - type: Get
+          name: getProductLabel
           description: 'Retrieve a product label by id'
-
-        - type: GetCollection
-          uriTemplate: /abstract-products/{abstractProductSku}/product-labels
-          description: 'Retrieve product labels for an abstract product'
-
-        - type: GetCollection
-          uriTemplate: /concrete-products/{concreteProductSku}/product-labels
-          description: 'Retrieve product labels for a concrete product'
 
     includableIn:
         - resource: AbstractProducts
           relationshipName: product-labels
           uriVariableMappings:
-              sku: abstractProductSku
+              sku: sku
 
         - resource: ConcreteProducts
           relationshipName: product-labels
           uriVariableMappings:
-              sku: concreteProductSku
+              productAbstractSku: sku
 
     properties:
         idProductLabel:
