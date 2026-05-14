@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Spryker\ApiPlatform\State\Provider\AbstractStorefrontProvider;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageClientInterface;
 use Spryker\Client\ProductStorage\ProductStorageClientInterface;
+use Spryker\Glue\ProductLabelsRestApi\Api\Storefront\Exception\ProductLabelsExceptionFactory;
 
 class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
 {
@@ -28,19 +29,23 @@ class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
     public function __construct(
         protected ProductLabelStorageClientInterface $productLabelStorageClient,
         protected ProductStorageClientInterface $productStorageClient,
+        protected ProductLabelsExceptionFactory $exceptionFactory,
     ) {
     }
 
+    /**
+     * @throws \Spryker\ApiPlatform\Exception\GlueApiException
+     */
     protected function provideItem(): ?object
     {
         if (!$this->hasUriVariable(static::URI_VAR_ID)) {
-            return null;
+            throw $this->exceptionFactory->createProductLabelIdMissingException();
         }
 
         $idProductLabel = (string)$this->getUriVariable(static::URI_VAR_ID);
 
         if ($idProductLabel === '') {
-            return null;
+            throw $this->exceptionFactory->createProductLabelIdMissingException();
         }
 
         $localeName = $this->getLocale()->getLocaleNameOrFail();
@@ -49,21 +54,24 @@ class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
         $labels = $this->productLabelStorageClient->findLabels([$idProductLabel], $localeName, $storeName);
 
         if ($labels === []) {
-            return null;
+            throw $this->exceptionFactory->createProductLabelNotFoundException();
         }
 
         return $this->mapLabelToResource(reset($labels));
     }
 
     /**
+     * @throws \Spryker\ApiPlatform\Exception\GlueApiException
+     *
      * @return array<\Generated\Api\Storefront\ProductLabelsStorefrontResource>
      */
     protected function provideCollection(): array
     {
         $uriVariables = $this->getUriVariables();
 
+        // `/product-labels` standalone route — no relationship context, no id → legacy 400/1202.
         if (!isset($uriVariables[static::URI_VAR_SKU])) {
-            return [];
+            throw $this->exceptionFactory->createProductLabelIdMissingException();
         }
 
         $abstractProductSku = (string)$uriVariables[static::URI_VAR_SKU];
@@ -97,6 +105,7 @@ class ProductLabelsStorefrontProvider extends AbstractStorefrontProvider
     protected function mapLabelsToResources(array $labels): array
     {
         $resources = [];
+
         foreach ($labels as $label) {
             $resources[] = $this->mapLabelToResource($label);
         }

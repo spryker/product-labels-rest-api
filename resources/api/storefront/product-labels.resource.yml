@@ -10,7 +10,29 @@ resource:
     operations:
         - type: Get
           name: getProductLabel
-          description: 'Retrieve a product label by id'
+          description: 'Retrieve a product label by its identifier.'
+          openapiContext:
+              summary: 'Get product label'
+              responses:
+                  200:
+                      description: 'Product label returned.'
+                  400:
+                      description: 'Product label id is missing (code 1202).'
+                  404:
+                      description: 'Product label is not found (code 1201).'
+
+        # Validation route so `GET /product-labels` (no id) hits provideCollection() which throws legacy 400/1202.
+        # The operation is named for the route shape (a collection endpoint), so a future real list
+        # implementation can take over the body without renaming the operation.
+        - type: GetCollection
+          name: getProductLabelCollection
+          uriTemplate: '/product-labels'
+          description: 'Returns 400 when called without the product label id.'
+          openapiContext:
+              summary: 'Returns 400 when product label id is missing'
+              responses:
+                  400:
+                      description: 'Product label id is missing (code 1202).'
 
     includableIn:
         - resource: AbstractProducts
