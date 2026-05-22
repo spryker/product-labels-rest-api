@@ -34,17 +34,6 @@ resource:
                   400:
                       description: 'Product label id is missing (code 1202).'
 
-    includableIn:
-        - resource: AbstractProducts
-          relationshipName: product-labels
-          uriVariableMappings:
-              sku: sku
-
-        - resource: ConcreteProducts
-          relationshipName: product-labels
-          uriVariableMappings:
-              productAbstractSku: sku
-
     properties:
         idProductLabel:
             type: string
