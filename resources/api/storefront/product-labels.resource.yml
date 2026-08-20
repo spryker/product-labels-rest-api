@@ -16,8 +16,6 @@ resource:
               responses:
                   200:
                       description: 'Product label returned.'
-                  400:
-                      description: 'Product label id is missing (code 1202).'
                   404:
                       description: 'Product label is not found (code 1201).'
 
