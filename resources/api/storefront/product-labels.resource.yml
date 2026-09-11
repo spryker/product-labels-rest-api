@@ -25,6 +25,7 @@ resource:
         - type: GetCollection
           name: getProductLabelCollection
           uriTemplate: '/product-labels'
+          openapi: false
           description: 'Returns 400 when called without the product label id.'
           openapiContext:
               summary: 'Returns 400 when product label id is missing'
